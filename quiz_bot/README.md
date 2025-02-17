@@ -7,6 +7,8 @@
 
 [Ссылка на бота](https://t.me/maverick_moto_quiz_bot)
 
+Картинки и вопросы взяты [отсюда](https://auto.ru/mag/article/kviz-ugaday-klichku-etogo-motocikla/?ysclid=m70ai7hr3r517208586&utm_referrer=https%3A%2F%2Fyandex.ru%2Fsearch%3Ftext%3Dmoto%2Bquiz%26lr%3D54%26clid%3D2192594)
+
 Бот написан на языке Python (версии 3.13.2) c использованием библиотеки Aiogram (версии 3.17.0), работа с базой данных осуществляется с помошью Aiosqlite (версии 0.21.0), асинхронные функции выполняются посредством Asyncio (версии 3.4.3)
 
 ## Описание команд бота:
