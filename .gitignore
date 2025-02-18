@@ -2,4 +2,4 @@ __pycache__/
 .DS_Store
 Temp/
 venv/
-.env
+quiz_bot/.env
