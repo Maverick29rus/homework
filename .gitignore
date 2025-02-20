@@ -3,3 +3,5 @@ __pycache__/
 Temp/
 venv/
 quiz_bot/.env
+quiz_bot_serverless/сжатие.zip
+quiz_bot_serverless/webhook_template.txt

@@ -58,11 +58,10 @@ async def right_answer(callback: types.CallbackQuery):
     current_question_index += 1
     await update_quiz_index(user_id, current_question_index)
 
-    # Задержка 1 секунда чтобы пользователь успел прочитать правильный ответ
-    await asyncio.sleep(1)
-
     # Проверяем достигнут ли конец квиза
     if current_question_index < len(quiz_data):
+        # Задержка 1 секунда чтобы пользователь успел прочитать правильный ответ
+        await asyncio.sleep(1)
         # Следующий вопрос
         await get_question(callback.message, user_id)
     else:

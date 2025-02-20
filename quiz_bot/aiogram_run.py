@@ -8,6 +8,7 @@ from handlers.answers import answer_router
 from handlers.name import name_router
 from handlers.statistics import statistics_router
 from handlers.result import result_router
+from commands import set_commands
 
 
 # Запуск процесса поллинга новых апдейтов
@@ -24,6 +25,7 @@ async def main():
     dp.include_router(name_router)
     # Запускаем пуллинг бота
     await dp.start_polling(bot)
+    await set_commands()
 
 
 if __name__ == "__main__":
