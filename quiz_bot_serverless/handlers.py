@@ -1,17 +1,16 @@
 from aiogram import types, F, Router
 from aiogram.filters import Command, CommandStart
-from aiogram.filters.command import Command
-from database import quiz_data
 from keyboards import main_kb
 from service import (
     get_question,
     new_quiz,
-    get_quiz_index,
     update_quiz_index,
-    get_result,
+    get_quiz_state,
     update_result,
     get_statistics,
     update_user_name,
+    get_quiz_data,
+    get_quiz_count,
 )
 
 answer_router = Router()
@@ -37,17 +36,20 @@ async def answer(callback: types.CallbackQuery):
     await callback.message.answer(f"Ваш ответ: {usr_answer}")
 
     # Получение текущего вопроса для данного пользователя
-    current_question_index = await get_quiz_index(user_id)
+    current_question_index = await get_quiz_state(user_id, 'question_index')
 
     # Получаем индекс правильного ответа для текущего вопроса
-    correct_index = quiz_data[current_question_index]["correct_option"]
+    correct_index = await get_quiz_data(current_question_index, "correct_option")
+
+    # Получем варианты ответов
+    options = (await get_quiz_data(current_question_index, "options")).split(",")
 
     # Получаем правильный ответ
-    correct_answer = quiz_data[current_question_index]["options"][correct_index]
+    correct_answer = options[correct_index]
 
     # Получение количества правильных ответов для данного пользователя
-    result = await get_result(user_id)
-
+    result = await get_quiz_state(user_id, 'result')
+    
     # Проверка правильности ответа
     if usr_answer == correct_answer:
         # Отправляем в чат сообщение о том что ответ верный
@@ -65,8 +67,11 @@ async def answer(callback: types.CallbackQuery):
     current_question_index += 1
     await update_quiz_index(user_id, current_question_index)
 
+    # Получаем количество вопросов
+    len_quiz_data = await get_quiz_count()
+
     # Проверяем достигнут ли конец квиза
-    if current_question_index < len(quiz_data):
+    if current_question_index < len_quiz_data:
         # Следующий вопрос
         await get_question(callback.message, user_id)
     else:
@@ -112,7 +117,7 @@ result_router = Router()
 @result_router.message(F.text == "Мой результат")
 @result_router.message(Command("result"))
 async def show_result(message: types.Message):
-    result = await get_result(message.from_user.id)
+    result = await get_quiz_state(message.from_user.id, 'result')
     await message.answer(f"Ваш результат: {result} правильных ответов\n")
 
 

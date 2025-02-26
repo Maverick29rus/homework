@@ -1,20 +1,56 @@
 import asyncio
 from database import pool, execute_update_query, execute_select_query
-from database import quiz_data
 from keyboards import generate_options_keyboard
+
+
+async def get_quiz_data(question_id, query):
+    get_query = f"""
+        DECLARE $question_id AS Uint32;
+
+        SELECT {query}
+        FROM `quiz_data`
+        WHERE question_id == $question_id;
+    """
+    results = execute_select_query(pool, get_query, question_id=question_id)
+
+    return results[0][query]
+
+
+async def get_quiz_count():
+    get_count = f"""SELECT COUNT(*) FROM `quiz_data`;"""
+    results = execute_select_query(pool, get_count)
+
+    return results[0][0]
+
+
+async def get_quiz_state(user_id, query):
+    get_query = f"""
+        DECLARE $user_id AS Uint64;
+
+        SELECT {query}
+        FROM `quiz_state`
+        WHERE user_id == $user_id;
+    """
+    results = execute_select_query(pool, get_query, user_id=user_id)
+
+    if len(results) == 0:
+        return 0
+    if results[0][query] is None:
+        return 0
+    return results[0][query]
 
 
 async def get_question(message, user_id):
     # Запрашиваем из базы текущий индекс для вопроса
-    current_question_index = await get_quiz_index(user_id)
+    current_question_index = await get_quiz_state(user_id, 'question_index')
     # Получаем список вариантов ответа для текущего вопроса
-    opts = quiz_data[current_question_index]["options"]
+    opts = (await get_quiz_data(current_question_index, "options")).split(",")
     # Получаем ID картинки
-    photo_id = quiz_data[current_question_index]["image"]
+    photo_id = await get_quiz_data(current_question_index, "image")
     # Функция генерации кнопок для текущего вопроса квиза
     kb = generate_options_keyboard(opts)
     # Получаем текущий вопрос
-    question = quiz_data[current_question_index]["question"]
+    question = await get_quiz_data(current_question_index, "question")
     await asyncio.sleep(1)
     # Отправляем в чат сообщение с вопросом, прикрепляем сгенерированные кнопки и картинку
     await message.answer_photo(
@@ -35,42 +71,6 @@ async def new_quiz(message):
     await update_result(user_id, result)
     # запрашиваем новый вопрос для квиза
     await get_question(message, user_id)
-
-
-async def get_quiz_index(user_id):
-    get_quiz_index = f"""
-        DECLARE $user_id AS Uint64;
-
-        SELECT question_index
-        FROM `quiz_state`
-        WHERE user_id == $user_id;
-    """
-    results = execute_select_query(pool, get_quiz_index, user_id=user_id)
-
-    if len(results) == 0:
-        return 0
-    if results[0]["question_index"] is None:
-        return 0
-    return results[0]["question_index"]
-
-
-# функция получения результата пользователя
-async def get_result(user_id):
-    get_user_result = f"""
-        DECLARE $user_id AS Uint64;
-
-        SELECT result
-        FROM `quiz_state`
-        WHERE user_id == $user_id;
-    """
-
-    results = execute_select_query(pool, get_user_result, user_id=user_id)
-
-    if len(results) == 0:
-        return 0
-    if results[0]["result"] is None:
-        return 0
-    return results[0]["result"]
 
 
 # функция получения результата всех пользователей
