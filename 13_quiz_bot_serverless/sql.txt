@@ -1,0 +1,104 @@
+CREATE TABLE `quiz_state` (
+user_id Uint64, 
+question_index Uint64,
+user_name Utf8 DEFAULT 'Аноним',
+result Uint64 DEFAULT 0,
+PRIMARY KEY (`user_id`)
+);
+
+CREATE TABLE `quiz_data` (
+question_id Uint32,
+question Utf8,
+options Utf8,
+correct_option Uint32,
+image Utf8,
+PRIMARY KEY (`question_id`)
+);
+
+UPSERT INTO quiz_data (question_id, question, options, correct_option, image)
+VALUES
+    (
+        0,
+        "Вот двухколёсный BMW серии GS: большой комфортабельный эндуро. Какое прозвище он получил в народе?",
+        "Джиксер,Жесть,Гусь",
+        2,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/0.webp"
+    ),
+    (
+        1,
+        "Это — по-настоящему большая Honda Gold Wing для далёких асфальтовых круизов. Какая кличка приклеилась к мотоциклу?",
+        "Винга,Голда,Линкор",
+        1,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/1.webp"
+    ),
+    (
+        2,
+        "Ещё одна Хонда — стильный турер PC 800 Pacific Coast родом из девяностых. Вспомните кличку мотоцикла?",
+        "Рысь,Восьмисотый,Пуфик",
+        2,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/2.webp"
+    ),
+    (
+        3,
+        "Спортивный Suzuki GSX-R1000 тоже не остался без клички. Какой?",
+        "Джиксер,Госарь,Вдова",
+        0,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/3.webp"
+    ),
+    (
+        4,
+        "«Спорттурист» Kawasaki ZZ-R400 остаётся отличным вариантом для начинающего байкера: он понятный, комфортный и не слишком буйный. А ещё у него есть прозвище. Какое?",
+        "Зизер,Зета,Зюзя",
+        0,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/4.webp"
+    ),
+    (
+        5,
+        "Ещё один Кавасаки — с заводским индексом и неофициальной кличкой. Знаете, как прозвали модель ER-6?",
+        "Эрка,Ёрш,Йорик",
+        1,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/5.webp"
+    ),
+    (
+        6,
+        "А это — дорожная Yamaha FZX 750, которая за пределами Японии носила имя Fazer. А какой никнейм модель получила у нас?",
+        "Батя,Пианино,Физик",
+        2,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/6.webp"
+    ),
+    (
+        7,
+        "Как насчёт прозвища для Ducati Multistrada 1200? У этого универсального «итальянца» оно тоже имеется",
+        "Мультик,Дрозд,Страдалец",
+        0,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/7.webp"
+    ),
+    (
+        8,
+        "BMW S 1000 RR с рядной «четвёркой» — лютый спортбайк: лёгкий, быстрый, технически продвинутый. Под стать характеристикам должно быть и русское прозвище, верно?",
+        "Сатана,Косой,Сыр",
+        2,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/8.webp"
+    ),
+    (
+        9,
+        "А вот лёгкая дорожная Honda VTR250. Уже догадались, как её кличут байкеры?",
+        "Витя,Ватрушка,Варя",
+        1,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/9.webp"
+    ),
+    (
+        10,
+        "Немолодой чоппер Yamaha Virago стильно выглядит и приятно едет. А ещё носит эффектную кличку. Какую?",
+        "Выдра,Ведьма,Вираж",
+        1,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/10.webp"
+    ),
+    (
+        11,
+        "Напоследок покажем Хонду — стильный круизер 600 VLX линейки Steed. И нам нужно верное прозвище модели!",
+        "Гантеля,Пончик,Стыд",
+        2,
+        "https://storage.yandexcloud.net/maverick-quiz-bot-bucket/11.webp"
+    )
+;

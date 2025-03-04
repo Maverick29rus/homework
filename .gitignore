@@ -2,6 +2,6 @@ __pycache__/
 .DS_Store
 Temp/
 venv/
-quiz_bot/.env
-quiz_bot_serverless/сжатие.zip
-quiz_bot_serverless/webhook_template.txt
+12_quiz_bot/.env
+13_quiz_bot_serverless/сжатие.zip
+13_quiz_bot_serverless/webhook_template.txt
