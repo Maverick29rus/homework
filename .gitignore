@@ -2,6 +2,8 @@ __pycache__/
 .DS_Store
 Temp/
 venv/
+.venv/
 Data/
 12_quiz_bot/.env
 13_quiz_bot_serverless/сжатие.zip
+requirements.txt
