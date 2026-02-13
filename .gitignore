@@ -1,9 +1,7 @@
-__pycache__/
+__pycache__
 .DS_Store
-Temp/
-venv/
-.venv/
-12_quiz_bot/.env
-13_quiz_bot_serverless/сжатие.zip
-requirements.txt
+Temp
+.venv
+.env
+*.zip
 Data/russian_literature
