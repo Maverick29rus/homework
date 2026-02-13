@@ -161,7 +161,7 @@ REST API для классификации изображений (опреде�
 ```bash
 # Клонирование репозитория
 git clone <repository-url>
-cd Homework
+cd AI_developer
 
 # Создание виртуального окружения
 python -m venv .venv
@@ -208,8 +208,8 @@ pip install -r requirements.txt
 
 ## 📞 Контакты и Ссылки
 
-- 💼 **Portfolio:** [Homework](https://github.com/Maverick29rus/homework)
-- 👤 **GitHub:** [Maverick29rus](https://github.com/Maverick29rus/homework)
+- 💼 **Portfolio:** [AI_developer](https://github.com/Maverick29rus/AI_developer)
+- 👤 **GitHub:** [Maverick29rus](https://github.com/Maverick29rus/AI_developer)
 - 📧 **Email:** [Maverick29rus](Maverick29rus@gmail.com)
 
 ---
